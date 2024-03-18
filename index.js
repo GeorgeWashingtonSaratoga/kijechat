@@ -3,6 +3,35 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.4/firebase
 import { getAuth, signInAnonymously, onAuthStateChanged, GoogleAuthProvider, signInWithRedirect, getRedirectResult, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js";
 import { getDatabase, ref, set, onDisconnect, onValue, onChildAdded, onChildRemoved, get, child, update, remove } from "https://www.gstatic.com/firebasejs/9.8.4/firebase-database.js";
 
+
+document.getElementById('uploadForm').addEventListener('submit', function(event) {
+event.preventDefault();
+var fileInput = document.getElementById('fileInput');
+var file = fileInput.files[0];
+
+if (file) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var imagePreview = document.getElementById('imagePreview');
+        var img = document.createElement('img');
+        img.onload = function() {
+            var canvas = document.createElement('canvas');
+            var ctx = canvas.getContext('2d');
+            canvas.width = 150;
+            canvas.height = 150;
+            ctx.drawImage(img, 0, 0, 150, 150);
+            img.src = canvas.toDataURL(); // Update img src with resized image
+        };
+        img.src = e.target.result;
+        img.classList.add('profile-img');
+        imagePreview.innerHTML = '';
+        imagePreview.appendChild(img);
+        localStorage.setItem("pfp", img);
+    };
+    reader.readAsDataURL(file);
+}
+});
+
 // Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDm-Je7iI-Nh1wtNaR3UwyzMR1LgciRZbU",
@@ -637,6 +666,12 @@ tsform.addEventListener("submit", (e) => {
     } else if (ts.options[ts.selectedIndex].text == "Dark Mode") {
         tcss.href = "theme_dark.css";
         localStorage.setItem("themepreference", "Dark Mode");
+    } else if (ts.options[ts.selectedIndex].text == "Abyss") {
+        tcss.href = "theme_abyss.css";
+        localStorage.setItem("themepreference", "Abyss");
+    } else if (ts.options[ts.selectedIndex].text == "Amethyst") {
+        tcss.href = "theme_amethyst.css";
+        localStorage.setItem("themepreference", "Amethyst");
     }
 });
 
@@ -648,6 +683,12 @@ if (!(localStorage.getItem("themepreference") == null)) {
     } else if (localStorage.getItem("themepreference") == "Dark Mode") {
         tcss.href = "theme_dark.css";
         ts.value = "0";
+    }else if (localStorage.getItem("themepreference") == "Abyss") {
+        tcss.href = "theme_abyss.css";
+        ts.value = "2";
+    } else if (localStorage.getItem("themepreference") == "Amethyst") {
+        tcss.href = "theme_amethyst.css";
+        ts.value = "3";
     }
 }
 
