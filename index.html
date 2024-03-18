@@ -76,6 +76,14 @@
             <input type = "submit", id = "xtrabutton", name = "xtrabutton", value = "Show extra", required>
         </form>
         <p id = "xtraexplain"></p>
+        <br><br>
+        <p>Profile Picture Upload</p>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="profilePicture" accept="image/*">
+            <input type="submit" value="Upload">
+        </form>
+        <div id="imagePreview"></div>
+        <br><br>
         <script src = "index.js", type = "module"></script>
         <!-- definition of hideImg so that if an image does not load there is no "not found" icon -->
         <script>
